@@ -1,5 +1,5 @@
 [project]
-name = "projekt"
+name = "epidemic-sim"
 version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
@@ -18,3 +18,7 @@ dev = [
     "pytest-cov>=7.1.0",
     "requests>=2.34.2",
 ]
+
+[build-system]
+requires = ["uv_build>=0.11.14,<0.12.0"]
+build-backend = "uv_build"

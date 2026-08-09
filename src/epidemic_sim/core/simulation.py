@@ -1,5 +1,5 @@
 # from ..viz.renderer import game_loop
-from .agent import Agent, Direction
+from .agent import Agent
 from ..config import SimulationConfig
 from .state import State
 
@@ -18,7 +18,7 @@ class Simulation:
             x_pos = self.rng.uniform(0, self.config.field_width)
             y_pos = self.rng.uniform(0, self.config.field_height)
 
-            direction = self.rng.choice(list(Direction))
+            direction = self.rng.uniform(0, 360)
 
             agents.append(
                 Agent(x_pos, y_pos, direction, self.config.agent_speed, State.GESUND)
@@ -29,8 +29,10 @@ class Simulation:
 
         return agents
 
+    # ein Tick
     def step(self) -> None:
-        pass
+        for agent in self._agents:
+            agent.move(self.config.field_width, self.config.field_height)
 
     @property
     def agents(self) -> list[Agent]:

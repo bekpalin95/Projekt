@@ -1,6 +1,5 @@
 import pygame
-from ..core.simulation import Simulation
-from ..core.state import State
+from ..core import Simulation, State
 
 _RGB_MAPPER = {
     State.GESUND: (255, 255, 255),
@@ -48,5 +47,7 @@ def game_loop(simulation: Simulation) -> None:
             )
 
         pygame.display.flip()
+
+        simulation.step()
 
     pygame.quit()

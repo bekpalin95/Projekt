@@ -16,7 +16,7 @@ class SimulationConfig:
     recovery_duration: int = 100
 
     # Bewegung
-    agent_speed: float = 1.0
+    agent_speed: float = 0.05
 
     # Raum
     field_width: int = 200
