@@ -1,5 +1,12 @@
 import pygame
 from ..core import Simulation, State
+import os
+from pathlib import Path
+
+path = Path(__file__).parent
+
+
+print(path)
 
 _RGB_MAPPER = {
     State.GESUND: (255, 255, 255),
@@ -7,12 +14,24 @@ _RGB_MAPPER = {
     State.IMMUN: (60, 226, 0),
 }
 
+clock = pygame.time.Clock()
+
 WIDTH = 800
 HEIGHT = 600
 
 
 def _size_skaliert(field_width: float, field_height: float) -> tuple[float, float]:
     return WIDTH / field_width, HEIGHT / field_height
+
+
+def show_text(screen, font, text, center_x, y):
+    surface = font.render(text, True, (182, 143, 64))
+    rect = surface.get_rect()
+
+    rect.centerx = center_x
+    rect.y = y
+
+    screen.blit(surface, rect)
 
 
 def game_loop(simulation: Simulation) -> None:
@@ -24,7 +43,10 @@ def game_loop(simulation: Simulation) -> None:
 
     running = True
 
+    font = pygame.font.Font(path / "ressources" / "font.ttf", 12)
+
     while running:
+        clock.tick(60)
         # 1. INPUT EVENT PROCESSING
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -45,6 +67,14 @@ def game_loop(simulation: Simulation) -> None:
                 (width_skal * agent.x, height_skal * agent.y),
                 2,
             )
+
+        show_text(
+            screen,
+            font,
+            f"Gesund: {simulation.n_gesund}, Krank: {simulation.n_krank}, Genesen: {simulation.n_genesen}",
+            WIDTH // 2,
+            20,
+        )
 
         pygame.display.flip()
 

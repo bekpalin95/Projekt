@@ -37,6 +37,10 @@ class Agent:
         self.y = y_neu
         self.direction = new_direction
 
+    def change_state(self, state: State) -> None:
+        if state == State.KRANK:
+            self.state = State.KRANK
+
     def _check_walls(
         self,
         x: float,
