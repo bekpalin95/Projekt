@@ -13,9 +13,9 @@ class Simulation:
         self.rng = numpy.random.default_rng(config.seed)
         self._agents = self._create_agents()
 
-        self.n_gesund = config.n_agents - config.n_infizierte
-        self.n_krank = config.n_infizierte
-        self.n_genesen = 0
+        self._n_gesund = config.n_agents - config.n_infizierte
+        self._n_krank = config.n_infizierte
+        self._n_genesen = 0
 
     def _create_agents(self) -> list[Agent]:
         agents = []
@@ -44,15 +44,13 @@ class Simulation:
             if agent.state != State.GESUND:
                 continue
 
-            nachbarn = self._get_nachbarn(
-                grid, agent.x // grid_size, agent.y // grid_size
-            )
+            nachbarn = agent.get_nachbarn(grid, grid_size)
+
             infiizierte_nachbarn = [
                 nachbar for nachbar in nachbarn if nachbar.state == State.KRANK
             ]
 
-            if infiizierte_nachbarn:
-                agent.calculate_escape_direction(infiizierte_nachbarn)
+            agent.calculate_escape_direction(infiizierte_nachbarn)
 
         # Infektion
         for infizierter in self._agents:
@@ -76,8 +74,8 @@ class Simulation:
                     and numpy.random.random() <= self.config.infection_chance
                 ):
                     nachbar.change_state(State.KRANK)
-                    self.n_gesund -= 1
-                    self.n_krank += 1
+                    self._n_gesund -= 1
+                    self._n_krank += 1
 
         # Bewegung
         for agent in self._agents:
@@ -110,7 +108,7 @@ class Simulation:
     def counts(
         self,
     ) -> tuple[int, int, int]:  # (Gesund, Krank, Genesen) für den Invarianten-Test
-        return self.n_gesund, self.n_krank, self.n_genesen
+        return self._n_gesund, self._n_krank, self._n_genesen
 
     @property
     def get_field_width(self) -> float:

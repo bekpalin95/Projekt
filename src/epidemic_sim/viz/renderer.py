@@ -66,10 +66,12 @@ def game_loop(simulation: Simulation) -> None:
                 2,
             )
 
+        count = simulation.counts()  # gesund, krank, genesen
+
         show_text(
             screen,
             font,
-            f"Gesund: {simulation.n_gesund}, Krank: {simulation.n_krank}, Genesen: {simulation.n_genesen}",
+            f"Gesund: {count[0]}, Krank: {count[1]}, Genesen: {count[2]}",
             WIDTH // 2,
             20,
         )

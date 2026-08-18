@@ -43,6 +43,9 @@ class Agent:
         für jeden infizierten Nachbarn einen Vektor berechnen, der von ihm weg zum Gesunden zeigt
         diese Vektoren summieren und die Nähe beachten => Fluchtvektor
         """
+        if not infizierte:
+            return
+
         summe_dx = sum(
             (self.x - inf.x) / math.dist([self.x, self.y], [inf.x, inf.y])
             for inf in infizierte
@@ -55,6 +58,17 @@ class Agent:
         radiant = math.atan2(summe_dy, summe_dx)  # aus dem Vektor den passenden Winkel
 
         self.direction = math.degrees(radiant)  # aus den Winkel => Grad
+
+    def get_nachbarn(self, grid: dict, grid_size: int) -> list:
+        nachbarn = []
+        block_x, block_y = self.x // grid_size, self.y // grid_size
+
+        for dx in (-1, 0, 1):
+            for dy in (-1, 0, 1):
+                zelle_key = (block_x + dx, block_y + dy)
+                nachbarn.extend(grid.get(zelle_key, []))
+
+        return nachbarn
 
     def change_state(self, state: State) -> None:
         if state == State.KRANK:
