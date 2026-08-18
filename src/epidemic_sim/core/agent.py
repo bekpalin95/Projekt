@@ -37,6 +37,25 @@ class Agent:
         self.y = y_neu
         self.direction = new_direction
 
+    def calculate_escape_direction(self, infizierte: list) -> None:
+        """
+        Fluchtvektor berechnen:
+        für jeden infizierten Nachbarn einen Vektor berechnen, der von ihm weg zum Gesunden zeigt
+        diese Vektoren summieren und die Nähe beachten => Fluchtvektor
+        """
+        summe_dx = sum(
+            (self.x - inf.x) / math.dist([self.x, self.y], [inf.x, inf.y])
+            for inf in infizierte
+        )
+        summe_dy = sum(
+            (self.y - inf.y) / math.dist([self.x, self.y], [inf.x, inf.y])
+            for inf in infizierte
+        )
+
+        radiant = math.atan2(summe_dy, summe_dx)  # aus dem Vektor den passenden Winkel
+
+        self.direction = math.degrees(radiant)  # aus den Winkel => Grad
+
     def change_state(self, state: State) -> None:
         if state == State.KRANK:
             self.state = State.KRANK

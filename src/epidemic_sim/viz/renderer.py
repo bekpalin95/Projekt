@@ -6,8 +6,6 @@ from pathlib import Path
 path = Path(__file__).parent
 
 
-print(path)
-
 _RGB_MAPPER = {
     State.GESUND: (255, 255, 255),
     State.KRANK: (255, 0, 0),
