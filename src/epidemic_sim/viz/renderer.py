@@ -49,8 +49,11 @@ def game_loop(simulation: Simulation) -> None:
 
     FOLLOW_MODE = False
 
+    TICK_RATES = [60, 120, 240, 480]
+    current_tick_rate = 0
+
     while running:
-        clock.tick(60)
+        clock.tick(TICK_RATES[current_tick_rate])
         # 1. INPUT EVENT PROCESSING
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -58,6 +61,8 @@ def game_loop(simulation: Simulation) -> None:
             elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_f:
                     FOLLOW_MODE = 1 - FOLLOW_MODE
+                elif event.key == pygame.K_SPACE:
+                    current_tick_rate = (current_tick_rate + 1) % len(TICK_RATES)
 
         screen.fill((30, 30, 30))
 
@@ -72,6 +77,8 @@ def game_loop(simulation: Simulation) -> None:
             )
 
         count = simulation.counts()  # gesund, krank, genesen
+
+        show_text(screen, font, f"{current_tick_rate+1}x", WIDTH - 30, 20)
 
         show_text(
             screen,
