@@ -47,17 +47,24 @@ class Agent:
             return
 
         summe_dx = sum(
-            (self.x - inf.x) / math.dist([self.x, self.y], [inf.x, inf.y])
+            (self.x - inf.x) / math.dist([self.x, self.y], [inf.x, inf.y]) ** 2
             for inf in infizierte
         )
         summe_dy = sum(
-            (self.y - inf.y) / math.dist([self.x, self.y], [inf.x, inf.y])
+            (self.y - inf.y) / math.dist([self.x, self.y], [inf.x, inf.y]) ** 2
             for inf in infizierte
         )
 
         radiant = math.atan2(summe_dy, summe_dx)  # aus dem Vektor den passenden Winkel
 
         self.direction = math.degrees(radiant)  # aus den Winkel => Grad
+
+    def move_to_cords(self, x: float, y: float) -> None:
+        vec_x, vec_y = x - self.x, y - self.y
+
+        radiant = math.atan2(vec_y, vec_x)
+
+        self.direction = math.degrees(radiant)
 
     def get_nachbarn(self, grid: dict, grid_size: int) -> list:
         nachbarn = []

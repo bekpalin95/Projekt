@@ -11,7 +11,7 @@ class SimulationConfig:
     assert n_infizierte <= n_agents
 
     # Infektionseigenschaften
-    infection_chance: float = 0.001
+    infection_chance: float = 0.05
     infection_radius: float = 2.0  # Meter
     recovery_duration: int = 100
 

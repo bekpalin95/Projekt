@@ -57,9 +57,7 @@ class Simulation:
             if infizierter.state != State.KRANK:
                 continue
 
-            block_x, block_y = infizierter.x // grid_size, infizierter.y // grid_size
-
-            nachbarn = self._get_nachbarn(grid, block_x, block_y)
+            nachbarn = infizierter.get_nachbarn(grid, grid_size)
 
             for nachbar in nachbarn:
                 if nachbar.state != State.GESUND:
@@ -96,19 +94,15 @@ class Simulation:
 
         return grid
 
-    def _get_nachbarn(self, grid: dict, block_x: int, block_y: int) -> list[Agent]:
-        nachbarn = []
-        for dx in (-1, 0, 1):
-            for dy in (-1, 0, 1):
-                zelle_key = (block_x + dx, block_y + dy)
-                nachbarn.extend(grid.get(zelle_key, []))
-
-        return nachbarn
-
     def counts(
         self,
     ) -> tuple[int, int, int]:  # (Gesund, Krank, Genesen) für den Invarianten-Test
         return self._n_gesund, self._n_krank, self._n_genesen
+
+    def inf_follow_mouse(self, mouse_x: float, mouse_y: float) -> None:
+        for agent in self.agents:
+            if agent.state == State.KRANK:
+                agent.move_to_cords(mouse_x, mouse_y)
 
     @property
     def get_field_width(self) -> float:

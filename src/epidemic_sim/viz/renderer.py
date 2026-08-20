@@ -43,20 +43,25 @@ def game_loop(simulation: Simulation) -> None:
 
     font = pygame.font.Font(path / "ressources" / "font.ttf", 12)
 
+    width_skal, height_skal = _size_skaliert(
+        simulation.get_field_width, simulation.get_field_height
+    )
+
+    FOLLOW_MODE = False
+
     while running:
         clock.tick(60)
         # 1. INPUT EVENT PROCESSING
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_f:
+                    FOLLOW_MODE = 1 - FOLLOW_MODE
 
         screen.fill((30, 30, 30))
 
         agents = simulation.agents
-
-        width_skal, height_skal = _size_skaliert(
-            simulation.get_field_width, simulation.get_field_height
-        )
 
         for agent in agents:
             pygame.draw.circle(
@@ -77,6 +82,13 @@ def game_loop(simulation: Simulation) -> None:
         )
 
         pygame.display.flip()
+
+        if FOLLOW_MODE:
+            mouse_x, mouse_y = (
+                pygame.mouse.get_pos()[0] / width_skal,
+                pygame.mouse.get_pos()[1] / height_skal,
+            )
+            simulation.inf_follow_mouse(mouse_x, mouse_y)
 
         simulation.step()
 
