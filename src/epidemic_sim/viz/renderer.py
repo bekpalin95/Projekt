@@ -88,6 +88,14 @@ def game_loop(simulation: Simulation) -> None:
             20,
         )
 
+        show_text(
+            screen,
+            font,
+            f"Follow Mode: {"ON" if FOLLOW_MODE else "OFF"}",
+            WIDTH - 100,
+            HEIGHT - 20,
+        )
+
         pygame.display.flip()
 
         if FOLLOW_MODE:
