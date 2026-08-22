@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+from argparse import Namespace
 
 
 @dataclass
@@ -24,3 +25,32 @@ class SimulationConfig:
 
     # Reproduzierbarkeit
     seed: int = 42
+
+    def __init__(self, args: Namespace):
+        if args.n_agents:
+            self.n_agents = args.n_agents
+
+        if args.n_infizierte:
+            assert args.n_infizierte <= self.n_agents
+            self.n_infizierte = args.n_infizierte
+
+        if args.infection_chance:
+            self.infection_chance = args.infection_chance
+
+        if args.infection_radius:
+            self.infection_radius = args.infection_radius
+
+        if args.recovery_duration:
+            self.recovery_duration = args.recovery_duration
+
+        if args.agent_speed:
+            self.agent_speed = args.agent_speed
+
+        if args.field_width:
+            self.field_width = args.field_width
+
+        if args.field_height:
+            self.field_height = args.field_height
+
+        if args.seed:
+            self.seed = args.seed

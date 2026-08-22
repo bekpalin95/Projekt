@@ -78,6 +78,7 @@ def game_loop(simulation: Simulation) -> None:
 
         count = simulation.counts()  # gesund, krank, genesen
 
+        # ----TEXT ANZEIGEN----
         show_text(screen, font, f"{current_tick_rate+1}x", WIDTH - 30, 20)
 
         show_text(
