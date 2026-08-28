@@ -9,7 +9,7 @@ path = Path(__file__).parent
 _RGB_MAPPER = {
     State.GESUND: (255, 255, 255),
     State.KRANK: (255, 0, 0),
-    State.IMMUN: (60, 226, 0),
+    State.GENESEN: (60, 226, 0),
 }
 
 clock = pygame.time.Clock()

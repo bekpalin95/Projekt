@@ -12,12 +12,14 @@ class SimulationConfig:
     assert n_infizierte <= n_agents
 
     # Infektionseigenschaften
-    infection_chance: float = 0.05
-    infection_radius: float = 2.0  # Meter
-    recovery_duration: int = 100
+    infection_chance: float = 0.1
+    infection_radius: float = 1.5  # Meter
+    recovery_duration: int = 4000
 
     # Bewegung
-    agent_speed: float = 0.2
+    krank_boost = 0.04
+    gesunder_agent_speed: float = 0.2
+    kranker_agent_speed: float = gesunder_agent_speed + krank_boost
 
     # Raum
     field_width: int = 200
@@ -44,7 +46,8 @@ class SimulationConfig:
             self.recovery_duration = args.recovery_duration
 
         if args.agent_speed:
-            self.agent_speed = args.agent_speed
+            self.gesunder_agent_speed = args.agent_speed
+            self.kranker_agent_speed = self.gesunder_agent_speed + self.krank_boost
 
         if args.field_width:
             self.field_width = args.field_width

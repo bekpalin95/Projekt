@@ -1,4 +1,5 @@
 from .state import State
+from ..config import SimulationConfig
 import math
 
 
@@ -11,12 +12,14 @@ class Agent:
         direction: float,
         speed: float,
         state: State,
+        recovery_time: int,
     ) -> None:
         self.x = x
         self.y = y
         self.direction = direction
         self.speed = speed
         self.state = state
+        self.recovery_time = recovery_time
 
         if not (0 <= self.direction <= 360):
             raise ValueError("Direction must be between 0 and 360")
@@ -77,9 +80,21 @@ class Agent:
 
         return nachbarn
 
-    def change_state(self, state: State) -> None:
+    def is_genesen(self) -> bool:
+        if self.state == State.KRANK and self.recovery_time <= 0:
+            return True
+
+        self.recovery_time -= 1
+        return False
+
+    def change_state(self, state: State, config: SimulationConfig) -> None:
         if state == State.KRANK:
-            self.state = State.KRANK
+            self.state = state
+            self.speed = config.kranker_agent_speed
+
+        if state == State.GENESEN:
+            self.state = state
+            self.speed = config.gesunder_agent_speed
 
     def _check_walls(
         self,

@@ -26,11 +26,18 @@ class Simulation:
             direction = self.rng.uniform(0, 360)
 
             agents.append(
-                Agent(x_pos, y_pos, direction, self.config.agent_speed, State.GESUND)
+                Agent(
+                    x_pos,
+                    y_pos,
+                    direction,
+                    self.config.gesunder_agent_speed,
+                    State.GESUND,
+                    self.config.recovery_duration,
+                )
             )
 
         for i in range(self.config.n_infizierte):
-            agents[i].state = State.KRANK
+            agents[i].change_state(State.KRANK, self.config)
 
         return agents
 
@@ -52,9 +59,15 @@ class Simulation:
 
             agent.calculate_escape_direction(infiizierte_nachbarn)
 
-        # Infektion
+        # Infektion und Genesung
         for infizierter in self._agents:
             if infizierter.state != State.KRANK:
+                continue
+
+            if infizierter.is_genesen():
+                infizierter.change_state(State.GENESEN, self.config)
+                self._n_genesen += 1
+                self._n_krank -= 1
                 continue
 
             nachbarn = infizierter.get_nachbarn(grid, grid_size)
@@ -69,9 +82,9 @@ class Simulation:
 
                 if (
                     distanz <= self.config.infection_radius
-                    and numpy.random.random() <= self.config.infection_chance
+                    and self.rng.random() <= self.config.infection_chance
                 ):
-                    nachbar.change_state(State.KRANK)
+                    nachbar.change_state(State.KRANK, self.config)
                     self._n_gesund -= 1
                     self._n_krank += 1
 
