@@ -1,6 +1,6 @@
 from .core import Simulation
 from .config import SimulationConfig
-from .viz import game_loop
+from .viz import game_loop, plot_history
 import argparse
 
 
@@ -46,3 +46,5 @@ if __name__ == "__main__":
     simulation = Simulation(config)
 
     game_loop(simulation)
+
+    plot_history(simulation.history)

@@ -16,6 +16,7 @@ class Simulation:
         self._n_gesund = config.n_agents - config.n_infizierte
         self._n_krank = config.n_infizierte
         self._n_genesen = 0
+        self.history = []
 
     def _create_agents(self) -> list[Agent]:
         agents = []
@@ -91,6 +92,9 @@ class Simulation:
         # Bewegung
         for agent in self._agents:
             agent.move(self.config.field_width, self.config.field_height)
+
+        # History für den Plot am Ende
+        self.history.append(self.counts())
 
     @property
     def agents(self) -> list[Agent]:
