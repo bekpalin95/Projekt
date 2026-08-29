@@ -41,6 +41,13 @@ def args_parser() -> argparse.Namespace:
         "--lockdown_infection_radius", type=int, required=False, help=""
     )
 
+    parser.add_argument(
+        "--export_csv",
+        type=str,
+        required=False,
+        help="Pfad, unter dem die S/I/R-Zeitreihe als CSV gespeichert wird",
+    )
+
     return parser.parse_args()
 
 
@@ -55,4 +62,8 @@ if __name__ == "__main__":
 
     plot_history(simulation.history)
 
-    export_history_csv(simulation.history, "ergebnis.csv")
+    if (
+        args.export_csv
+    ):  # Beispielaufruf: uv run python -m epidemic_sim.cli --export_csv ergebnis.csv
+        export_history_csv(simulation.history, args.export_csv)
+        print(f"Zeitreihe gespeichert unter: {args.export_csv}")
