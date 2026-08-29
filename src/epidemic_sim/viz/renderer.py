@@ -97,6 +97,14 @@ def game_loop(simulation: Simulation) -> None:
             HEIGHT - 20,
         )
 
+        show_text(
+            screen,
+            font,
+            f"Lockdown: {'ON' if simulation.lockdown_aktiv else 'OFF'}",
+            100,
+            HEIGHT - 20,
+        )
+
         pygame.display.flip()
 
         if FOLLOW_MODE:

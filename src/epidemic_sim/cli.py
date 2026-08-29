@@ -34,6 +34,12 @@ def args_parser() -> argparse.Namespace:
     parser.add_argument(
         "--seed", type=int, required=False, help="Seed des Zufallsgenerators"
     )
+    parser.add_argument(
+        "--lockdown_threshold", type=int, required=False, help="lockdown threshold"
+    )
+    parser.add_argument(
+        "--lockdown_infection_radius", type=int, required=False, help=""
+    )
 
     return parser.parse_args()
 

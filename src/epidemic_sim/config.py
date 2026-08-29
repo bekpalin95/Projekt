@@ -12,9 +12,9 @@ class SimulationConfig:
     assert n_infizierte <= n_agents
 
     # Infektionseigenschaften
-    infection_chance: float = 0.1
+    infection_chance: float = 0.05
     infection_radius: float = 1.5  # Meter
-    recovery_duration: int = 4000
+    recovery_duration: int = 3000
 
     # Bewegung
     krank_boost = 0.04
@@ -27,6 +27,10 @@ class SimulationConfig:
 
     # Reproduzierbarkeit
     seed: int = 42
+
+    # Lockdown
+    lockdown_threshold: int = n_agents * 0.2  # 20% der Agenten
+    lockdown_infection_radius: float = infection_radius - 0.5
 
     def __init__(self, args: Namespace):
         if args.n_agents:
@@ -57,3 +61,9 @@ class SimulationConfig:
 
         if args.seed:
             self.seed = args.seed
+
+        if args.lockdown_threshold:
+            self.lockdown_threshold = args.lockdown_threshold
+
+        if args.lockdown_infection_radius:
+            self.lockdown_infection_radius = args.lockdown_infection_radius
