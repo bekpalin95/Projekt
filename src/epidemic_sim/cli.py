@@ -1,4 +1,4 @@
-from .core import Simulation
+from .core import Simulation, export_history_csv
 from .config import SimulationConfig
 from .viz import game_loop, plot_history
 import argparse
@@ -54,3 +54,5 @@ if __name__ == "__main__":
     game_loop(simulation)
 
     plot_history(simulation.history)
+
+    export_history_csv(simulation.history, "ergebnis.csv")
