@@ -22,7 +22,22 @@ HEIGHT = 600
 
 
 def _size_skaliert(field_width: float, field_height: float) -> tuple[float, float]:
-    """Berechnet die Skalierungsfaktoren für die visuelle Darstellung"""
+    """
+    Berechnet die Skalierungsfaktoren für die visuelle Darstellung
+
+    Beispiele:
+    >>> # Wenn das logische Feld exakt so groß ist wie das Fenster
+    >>> _size_skaliert(800.0, 600.0)
+    (1.0, 1.0)
+
+    >>> # Wenn das logische Feld nur halb so groß ist (Skalierung x2)
+    >>> _size_skaliert(400.0, 300.0)
+    (2.0, 2.0)
+
+    >>> # Wenn das logische Feld sehr klein ist (z. B. 80x60)
+    >>> _size_skaliert(80.0, 60.0)
+    (10.0, 10.0)
+    """
     return WIDTH / field_width, HEIGHT / field_height
 
 
