@@ -41,7 +41,11 @@ class SimulationConfig:
             self.n_agents = args.n_agents
 
         if args.n_infizierte:
-            assert args.n_infizierte <= self.n_agents
+            if args.n_infizierte > self.n_agents:
+                raise ValueError(
+                    f"n_infizierte ({args.n_infizierte}) darf nicht größer als "
+                    f"n_agents ({self.n_agents}) sein."
+                )
             self.n_infizierte = args.n_infizierte
 
         if args.infection_chance:
@@ -65,6 +69,9 @@ class SimulationConfig:
 
         if args.seed:
             self.seed = args.seed
+
+        self.lockdown_threshold = self.n_agents * 0.2
+        self.lockdown_infection_radius = self.infection_radius - 0.5
 
         if args.lockdown_threshold:
             self.lockdown_threshold = args.lockdown_threshold

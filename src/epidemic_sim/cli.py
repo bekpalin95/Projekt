@@ -58,7 +58,11 @@ def args_parser() -> argparse.Namespace:
 if __name__ == "__main__":
     args = args_parser()
 
-    config = SimulationConfig(args)
+    try:
+        config = SimulationConfig(args)
+    except ValueError as e:
+        print(f"Ungültige Eingabe: {e}")
+        raise SystemExit(1)
 
     simulation = Simulation(config)
 

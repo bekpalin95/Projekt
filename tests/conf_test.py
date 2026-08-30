@@ -1,6 +1,8 @@
 from epidemic_sim.core import Agent, Simulation
-
+from argparse import Namespace
 from .config_builder import make_config
+import pytest
+from epidemic_sim.config import SimulationConfig
 
 
 def test_grid_building():
@@ -21,3 +23,21 @@ def test_grid_building():
     assert len(grid[(5, 19)]) == 2
     assert len(grid[(4, 4)]) == 1
     assert len(grid[(1, 1)]) == 0
+
+
+def test_n_infizierte_groesser_als_n_agents_wirft_error():
+    args = Namespace(
+        n_agents=10,
+        n_infizierte=50,
+        infection_chance=None,
+        infection_radius=None,
+        recovery_duration=None,
+        agent_speed=None,
+        field_width=None,
+        field_height=None,
+        seed=None,
+        lockdown_threshold=None,
+        lockdown_infection_radius=None,
+    )
+    with pytest.raises(ValueError):
+        SimulationConfig(args)

@@ -74,7 +74,12 @@ def run_scenario(
     args_dict.pop("infection_chance_values", None)
     args_dict.pop("max_ticks", None)
 
-    config = SimulationConfig(Namespace(**args_dict))
+    try:
+        config = SimulationConfig(Namespace(**args_dict))
+    except ValueError as e:
+        print(f"Ungültige Eingabe: {e}")
+        raise SystemExit(1)
+
     simulation = Simulation(config)
 
     ticks = 0
