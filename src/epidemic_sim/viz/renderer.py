@@ -1,7 +1,8 @@
-import pygame
-from ..core import Simulation, State
-import os
 from pathlib import Path
+
+import pygame
+
+from ..core import Simulation, State
 
 path = Path(__file__).parent
 

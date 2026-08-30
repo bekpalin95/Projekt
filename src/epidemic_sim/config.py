@@ -1,5 +1,5 @@
-from dataclasses import dataclass
 from argparse import Namespace
+from dataclasses import dataclass
 
 
 @dataclass

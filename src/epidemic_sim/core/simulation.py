@@ -1,10 +1,11 @@
 # from ..viz.renderer import game_loop
-from .agent import Agent
-from ..config import SimulationConfig
-from .state import State
 import math
 
 import numpy
+
+from ..config import SimulationConfig
+from .agent import Agent
+from .state import State
 
 
 class Simulation:

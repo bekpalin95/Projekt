@@ -1,7 +1,8 @@
-from .core import Simulation, export_history_csv
-from .config import SimulationConfig
-from .viz import game_loop, plot_history
 import argparse
+
+from .config import SimulationConfig
+from .core import Simulation, export_history_csv
+from .viz import game_loop, plot_history
 
 
 def args_parser() -> argparse.Namespace:

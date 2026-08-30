@@ -1,7 +1,6 @@
-from epidemic_sim.core import Agent, Simulation, State
-from epidemic_sim import SimulationConfig
+from epidemic_sim.core import Agent, Simulation
+
 from .config_builder import make_config
-import pytest
 
 
 def test_grid_building():

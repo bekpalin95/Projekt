@@ -1,5 +1,5 @@
-from epidemic_sim.core import Agent, Simulation, State
-from epidemic_sim import SimulationConfig
+from epidemic_sim.core import Simulation, State
+
 from .config_builder import make_config
 
 

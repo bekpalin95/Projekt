@@ -1,6 +1,6 @@
-from epidemic_sim.core import Agent, Simulation, State
-from epidemic_sim import SimulationConfig
 import pytest
+
+from epidemic_sim.core import Agent, State
 
 
 def test_move_ohne_wandberuehrung():

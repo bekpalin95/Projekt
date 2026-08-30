@@ -1,6 +1,5 @@
-import pytest
-
 from epidemic_sim.core import Agent, Simulation, State
+
 from .config_builder import make_config
 
 

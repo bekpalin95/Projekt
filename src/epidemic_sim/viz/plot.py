@@ -1,8 +1,6 @@
 # viz/plot.py
 import matplotlib.pyplot as plt
 
-from ..core.state import State
-
 
 def plot_history(history: list[tuple[int, int, int]]) -> None:
     """Zeigt einen Plot von S/I/R-Verlauf über die Zeit.
@@ -22,7 +20,7 @@ def plot_history(history: list[tuple[int, int, int]]) -> None:
 
     zeitschritte = range(len(history))
 
-    fig, ax = plt.subplots(figsize=(10, 6))
+    _, ax = plt.subplots(figsize=(10, 6))
 
     ax.plot(zeitschritte, gesund_verlauf, label="Gesund (S)", color="blue")
     ax.plot(zeitschritte, krank_verlauf, label="Krank (I)", color="red")

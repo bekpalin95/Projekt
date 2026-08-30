@@ -89,7 +89,7 @@ def run_scenario(
 
 def plot_sweep(results: dict[float, list[tuple[int, int, int]]]) -> None:
     """Zeigt die I-Kurve (Infizierte über Zeit) für jedes Szenario in einem Plot."""
-    fig, ax = plt.subplots(figsize=(10, 6))
+    _, ax = plt.subplots(figsize=(10, 6))
 
     for infection_chance, history in results.items():
         krank_verlauf = [eintrag[1] for eintrag in history]

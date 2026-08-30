@@ -1,4 +1,5 @@
 from argparse import Namespace
+
 from epidemic_sim import SimulationConfig
 
 

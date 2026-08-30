@@ -1,6 +1,7 @@
-from .state import State
-from ..config import SimulationConfig
 import math
+
+from ..config import SimulationConfig
+from .state import State
 
 
 class Agent:
