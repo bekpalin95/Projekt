@@ -22,7 +22,9 @@ def _size_skaliert(field_width: float, field_height: float) -> tuple[float, floa
     return WIDTH / field_width, HEIGHT / field_height
 
 
-def show_text(screen, font, text, center_x, y):
+def show_text(
+    screen: pygame.Surface, font: pygame.font.Font, text: str, center_x: int, y: int
+) -> None:
     surface = font.render(text, True, (182, 143, 64))
     rect = surface.get_rect()
 
@@ -60,7 +62,7 @@ def game_loop(simulation: Simulation) -> None:
                 running = False
             elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_f:
-                    FOLLOW_MODE = 1 - FOLLOW_MODE
+                    FOLLOW_MODE = not FOLLOW_MODE
                 elif event.key == pygame.K_SPACE:
                     current_tick_rate = (current_tick_rate + 1) % len(TICK_RATES)
 

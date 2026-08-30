@@ -29,7 +29,7 @@ class SimulationConfig:
     seed: int = 42
 
     # Lockdown
-    lockdown_threshold: int = n_agents * 0.2  # 20% der Agenten
+    lockdown_threshold: float = n_agents * 0.2  # 20% der Agenten
     lockdown_infection_radius: float = infection_radius - 0.5
 
     def __init__(self, args: Namespace):

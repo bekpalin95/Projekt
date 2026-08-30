@@ -40,7 +40,7 @@ class Agent:
         self.y = y_neu
         self.direction = new_direction
 
-    def calculate_escape_direction(self, infizierte: list) -> None:
+    def calculate_escape_direction(self, infizierte: list["Agent"]) -> None:
         """
         Fluchtvektor berechnen:
         für jeden infizierten Nachbarn einen Vektor berechnen, der von ihm weg zum Gesunden zeigt
@@ -69,7 +69,9 @@ class Agent:
 
         self.direction = math.degrees(radiant)
 
-    def get_nachbarn(self, grid: dict, grid_size: int) -> list:
+    def get_nachbarn(
+        self, grid: dict[tuple[float, float], list["Agent"]], grid_size: int
+    ) -> list["Agent"]:
         nachbarn = []
         block_x, block_y = self.x // grid_size, self.y // grid_size
 

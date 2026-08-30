@@ -6,5 +6,5 @@ class State(Enum):
     KRANK = auto()
     GENESEN = auto()
 
-    def __str__(self):
+    def __str__(self) -> str:
         return self.name.title()

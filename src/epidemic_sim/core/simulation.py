@@ -16,7 +16,7 @@ class Simulation:
         self._n_gesund = config.n_agents - config.n_infizierte
         self._n_krank = config.n_infizierte
         self._n_genesen = 0
-        self.history = []
+        self.history: list[tuple[int, int, int]] = []
         self.is_lockdown = False
 
     def _create_agents(self) -> list[Agent]:
@@ -75,7 +75,7 @@ class Simulation:
         return False
 
     def _infektion_und_genesung(
-        self, grid: dict[tuple[int, int], list[Agent]], grid_size: int
+        self, grid: dict[tuple[float, float], list[Agent]], grid_size: int
     ) -> None:
         for infizierter in self._agents:
             if infizierter.state != State.KRANK:
@@ -112,7 +112,7 @@ class Simulation:
                     self._n_krank += 1
 
     def _gesunde_weichen_kranken_aus(
-        self, grid: dict[tuple[int, int], list[Agent]], grid_size: int
+        self, grid: dict[tuple[float, float], list[Agent]], grid_size: int
     ) -> None:
         for agent in self._agents:
             if agent.state != State.GESUND:
@@ -126,8 +126,8 @@ class Simulation:
 
             agent.calculate_escape_direction(infiizierte_nachbarn)
 
-    def _build_grid(self, size: int = 5) -> dict[tuple[int, int], list[Agent]]:
-        grid = {}
+    def _build_grid(self, size: int = 5) -> dict[tuple[float, float], list[Agent]]:
+        grid: dict[tuple[float, float], list[Agent]] = {}
         for x in range(self.config.field_width // size):
             for y in range(self.config.field_height // size):
                 grid[(x, y)] = []
