@@ -1,3 +1,5 @@
+"""rendert die Visualisierung der Simulation"""
+
 from pathlib import Path
 
 import pygame
@@ -20,12 +22,14 @@ HEIGHT = 600
 
 
 def _size_skaliert(field_width: float, field_height: float) -> tuple[float, float]:
+    """Berechnet die Skalierungsfaktoren für die visuelle Darstellung"""
     return WIDTH / field_width, HEIGHT / field_height
 
 
 def show_text(
     screen: pygame.Surface, font: pygame.font.Font, text: str, center_x: int, y: int
 ) -> None:
+    """Zeichnet einen horizontal zentrierten Text auf den Bildschirm"""
     surface = font.render(text, True, (182, 143, 64))
     rect = surface.get_rect()
 
@@ -36,6 +40,7 @@ def show_text(
 
 
 def game_loop(simulation: Simulation) -> None:
+    """main game loop"""
     pygame.init()
 
     screen = pygame.display.set_mode((WIDTH, HEIGHT))

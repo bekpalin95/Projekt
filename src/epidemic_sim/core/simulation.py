@@ -1,4 +1,7 @@
-# from ..viz.renderer import game_loop
+"""
+Dieses Modul enthält die Kernlogik der Epidemie-Simulation.
+"""
+
 import math
 
 import numpy
@@ -9,7 +12,24 @@ from .state import State
 
 
 class Simulation:
+    """Verwaltet den Hauptablauf und Zustand der Epidemie-Simulation.
+
+    Diese Klasse ist das Herzstück des Programms. Sie instanziiert die Agenten,
+    steuert die tick-basierte Logik (Bewegung, Infektion, Genesung) und
+    zeichnet den Verlauf der Pandemie auf.
+    """
+
     def __init__(self, config: SimulationConfig) -> None:
+        """Initialisiert die Simulation basierend auf der Konfiguration.
+
+        Richtet den Zufallsgenerator (RNG) mit einem Seed ein, erstellt die
+        Agenten und bereitet die History-Aufzeichnung vor.
+
+        Args:
+            config (SimulationConfig): Die zentrale Konfiguration mit allen
+                Simulationsparametern (Feldgröße, Radien, Chancen, etc.).
+        """
+
         self.config = config
         self.rng = numpy.random.default_rng(config.seed)
         self._agents = self._create_agents()
@@ -21,6 +41,12 @@ class Simulation:
         self.is_lockdown = False
 
     def _create_agents(self) -> list[Agent]:
+        """Erzeugt und platziert die initiale Population von Agenten.
+
+        Verteilt die Agenten zufällig auf dem Spielfeld und infiziert die
+        in der Konfiguration festgelegte Anzahl von Start-Agenten.
+        """
+
         agents = []
         for _ in range(self.config.n_agents):
             x_pos = self.rng.uniform(0, self.config.field_width)
@@ -46,6 +72,13 @@ class Simulation:
 
     # ein Tick
     def step(self) -> None:
+        """Führt einen einzelnen Simulationsschritt (Tick) aus.
+
+        Baut das räumliche Suchraster auf, wendet Lockdown-Verhaltensweisen an
+        (falls aktiv), verarbeitet Infektionen und Genesungen, bewegt alle
+        Agenten und speichert den aktuellen Zustand in der History.
+        """
+
         grid_size = 5
         grid = self._build_grid(size=grid_size)
 
@@ -65,10 +98,17 @@ class Simulation:
 
     @property
     def agents(self) -> list[Agent]:
+        """Gibt die Liste aller Agenten in der Simulation zurück"""
         return self._agents
 
     @property
     def lockdown_aktiv(self) -> bool:
+        """Prüft und aktualisiert den Lockdown-Status.
+
+        Einmal aktiviert (wenn die Schwelle überschritten wird), bleibt
+        der Lockdown für den Rest der Simulation bestehen.
+        """
+
         if self._n_krank >= self.config.lockdown_threshold or self.is_lockdown:
             self.is_lockdown = True
             return True
@@ -78,6 +118,13 @@ class Simulation:
     def _infektion_und_genesung(
         self, grid: dict[tuple[float, float], list[Agent]], grid_size: int
     ) -> None:
+        """Verarbeitet die Ansteckungslogik und den Genesungsprozess.
+
+        Prüft für jeden infizierten Agenten, ob er genesen ist. Wenn nicht,
+        werden benachbarte gesunde Agenten gesucht und basierend auf
+        Distanz und Infektionswahrscheinlichkeit angesteckt.
+        """
+
         for infizierter in self._agents:
             if infizierter.state != State.KRANK:
                 continue
@@ -115,6 +162,12 @@ class Simulation:
     def _gesunde_weichen_kranken_aus(
         self, grid: dict[tuple[float, float], list[Agent]], grid_size: int
     ) -> None:
+        """Lässt gesunde Agenten vor kranken Agenten fliehen.
+
+        Wird während eines aktiven Lockdowns aufgerufen. Jeder gesunde
+        Agent berechnet einen Fluchtvektor basierend auf den umliegenden
+        infizierten Agenten.
+        """
         for agent in self._agents:
             if agent.state != State.GESUND:
                 continue
@@ -128,6 +181,12 @@ class Simulation:
             agent.calculate_escape_direction(infiizierte_nachbarn)
 
     def _build_grid(self, size: int = 5) -> dict[tuple[float, float], list[Agent]]:
+        """Erstellt ein räumliches Raster (Grid) zur Nachbarschaftssuche.
+
+        Teilt das Spielfeld in quadratische Zellen der Länge `size` auf
+        und ordnet jeden Agenten der passenden Zelle zu.
+        """
+
         grid: dict[tuple[float, float], list[Agent]] = {}
         for x in range(self.config.field_width // size):
             for y in range(self.config.field_height // size):
@@ -141,21 +200,21 @@ class Simulation:
     def counts(
         self,
     ) -> tuple[int, int, int]:  # (Gesund, Krank, Genesen) für den Invarianten-Test
+        """Ermittelt die aktuelle Verteilung der Gesundheitszustände"""
         return self._n_gesund, self._n_krank, self._n_genesen
 
     def inf_follow_mouse(self, mouse_x: float, mouse_y: float) -> None:
+        """Richtet alle infizierten Agenten auf die Mauskoordinaten aus"""
         for agent in self.agents:
             if agent.state == State.KRANK:
                 agent.move_to_cords(mouse_x, mouse_y)
 
     @property
     def get_field_width(self) -> float:
+        """Gibt die logische Breite des Simulationsfeldes zurück"""
         return self.config.field_width
 
     @property
     def get_field_height(self) -> float:
+        """Gibt die logische Höhe des Simulationsfeldes zurück"""
         return self.config.field_height
-
-
-if __name__ == "__main__":
-    pass

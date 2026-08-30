@@ -1,3 +1,5 @@
+"""Batch-Modus: Parameter-Sweep, mehrere Szenarien ohne Visualisierung"""
+
 import argparse
 from argparse import Namespace
 
@@ -8,6 +10,7 @@ from .core import Simulation
 
 
 def args_parser() -> argparse.Namespace:
+    """parses args"""
     parser = argparse.ArgumentParser()
     parser.add_argument(
         "--infection_chance_values",

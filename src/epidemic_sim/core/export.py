@@ -1,3 +1,7 @@
+"""
+Dieses Modul enthält die Kernlogik der Epidemie-Simulation.
+"""
+
 import csv
 from pathlib import Path
 

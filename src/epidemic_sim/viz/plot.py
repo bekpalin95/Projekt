@@ -1,4 +1,7 @@
-# viz/plot.py
+"""
+Zeigt einen Plot von S/I/R-Verlauf über die Zeit
+"""
+
 import matplotlib.pyplot as plt
 
 

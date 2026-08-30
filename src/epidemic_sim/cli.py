@@ -1,3 +1,5 @@
+"""cli für die Simulation"""
+
 import argparse
 
 from .config import SimulationConfig
@@ -6,6 +8,7 @@ from .viz import game_loop, plot_history
 
 
 def args_parser() -> argparse.Namespace:
+    """parses args"""
     parser = argparse.ArgumentParser()
 
     parser.add_argument(

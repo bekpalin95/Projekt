@@ -1,9 +1,12 @@
+"""Config"""
+
 from argparse import Namespace
 from dataclasses import dataclass
 
 
 @dataclass
 class SimulationConfig:
+    """Config für die Simulation"""
 
     # Populationsgröße
     n_agents: int = 1000
@@ -33,6 +36,7 @@ class SimulationConfig:
     lockdown_infection_radius: float = infection_radius - 0.5
 
     def __init__(self, args: Namespace):
+        """Initialisierung mit Usereingaben"""
         if args.n_agents:
             self.n_agents = args.n_agents
 
