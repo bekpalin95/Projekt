@@ -1,8 +1,11 @@
-from epidemic_sim.core import Agent, Simulation
 from argparse import Namespace
-from .config_builder import make_config
+
 import pytest
+
 from epidemic_sim.config import SimulationConfig
+from epidemic_sim.core import Agent, Simulation
+
+from .config_builder import make_config
 
 
 def test_grid_building():
