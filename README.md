@@ -19,7 +19,7 @@ Eine 2D-Simulation der Ausbreitung einer Infektionskrankheit durch bewegliche Ag
 Voraussetzung: [uv](https://docs.astral.sh/uv/) und Python ≥ 3.12.
 
 ```bash
-git clone <repo-url>
+git clone https://github.com/bekpalin95/Projekt.git
 cd epidemic_sim
 uv sync
 ```
